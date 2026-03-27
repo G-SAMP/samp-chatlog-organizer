@@ -6,3 +6,5 @@ This plugin will organize the chat logs for you, with a different name format: *
 **Supported Versions:** 0.3.7-R1, 0.3.7-R2, 0.3.7-R3, 0.3.7-R4, 0.3.7-R5 and 0.3.DL
 
 You are gonna need an ASI loader to use this plugin.
+
+Original Creator: [Brunoo16](https://github.com/Brunoo16)
