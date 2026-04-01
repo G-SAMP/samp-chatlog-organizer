@@ -62,16 +62,9 @@ static void Thread()
 						}
 						else if (*reinterpret_cast<BYTE*>(samp + 0xE5989) == 0x35) // 0.3.7-R5
 						{ 
-							/*
-								Address: 100c47d2
-								Value:  68 d8 da 0e 10      
-								Instruction: PUSH       s_%s\chatlog.txt_100edad8 = "%s\\chatlog.txt"
-								68 = PUSH
-								d8 da 0e 10 = Offset to the string (we will going to overwrite this with our string address)
-							*/
-							VirtualProtect(reinterpret_cast<void*>(samp + 0xC47D2 + 0x1), 4, PAGE_EXECUTE_READWRITE, &OldProtect); // pointer that holds the address of the string of "chatlog.txt"
-
-							*reinterpret_cast<DWORD*>(samp + 0xC47D2 + 0x1) = reinterpret_cast<DWORD>(&file_name_and_path); // changing the address of string to our string
+							VirtualProtect(reinterpret_cast<void*>(samp + 0xC47D2 + 0x1), 4, PAGE_EXECUTE_READWRITE, &OldProtect);
+							
+							*reinterpret_cast<DWORD*>(samp + 0xC47D2 + 0x1) = reinterpret_cast<DWORD>(&file_name_and_path);
 						}
 						else
 						{
