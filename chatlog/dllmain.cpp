@@ -52,18 +52,18 @@ static void Thread()
 
 						break;
 					}
-					case 0x0: // 0.3.7-R3 and 0.3.7-R4 and 0.3.7-R5
+					case 0x0: // 0.3.7-R3 and 0.3.7-R4
 					{
 						if (*reinterpret_cast<BYTE*>(samp + 0xE596C) != 0x7B) // This works for now, meh...
 						{
 							VirtualProtect(reinterpret_cast<void*>(samp + 0xC5062 + 0x1), 4, PAGE_EXECUTE_READWRITE, &OldProtect);
-							
+
 							*reinterpret_cast<DWORD*>(samp + 0xC5062 + 0x1) = reinterpret_cast<DWORD>(&file_name_and_path);
 						}
 						else if (*reinterpret_cast<BYTE*>(samp + 0xE5989) == 0x35) // 0.3.7-R5
 						{ 
 							/*
-								Address: 100c47d2
+								Address: 0xc47d2
 								Value:  68 d8 da 0e 10      
 								Instruction: PUSH       s_%s\chatlog.txt_100edad8 = "%s\\chatlog.txt"
 								68 = PUSH
@@ -81,7 +81,7 @@ static void Thread()
 						}
 						break;
 					}
-					case 0x31: // 0.3.DL-R1 and 0.3.DL-2
+					case 0x31: // 0.3.DL-R1
 					{
 						VirtualProtect(reinterpret_cast<void*>(samp + 0xC5EB2 + 0x1), 4, PAGE_EXECUTE_READWRITE, &OldProtect);
 
@@ -99,13 +99,13 @@ static void Thread()
 	}
 }
 
-BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
 {
 	if (ul_reason_for_call == DLL_PROCESS_ATTACH)
 	{
 		DisableThreadLibraryCalls(hModule);
 		module = hModule;
-		return CreateThread(0, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(Thread), 0, 0, 0) != NULL;
+		return CreateThread(0, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(Thread), 0, 0, 0) > 0;
 	}
-	return TRUE;
+	return 1;
 }
